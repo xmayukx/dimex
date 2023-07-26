@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
-
+import { BsGoogle } from "react-icons/bs";
 export default () => {
   return (
     <main className="flex lg:mx-[35rem] flex-col bg-black space-y-[10rem]">
@@ -11,11 +10,14 @@ export default () => {
           <span className=" text-indigo-400">Succeed.</span>
         </div>
       </section>
-
-      <div className="flex justify-center mt-10">
-        <Button className="p-6 text-base">
-          <EnvelopeOpenIcon className="mr-2 h-5 w-5" /> Login with Email
+      <div className="flex flex-col">
+        <Button className="p-6 text-base font-secondary mx-auto">
+          <BsGoogle className="mr-4 h-4 w-4" /> Sign up with Google
         </Button>
+        <span className="font-secondary mx-auto text-sm mt-2">
+          Already have an account?{" "}
+          <span className=" font-semibold underline">Login</span>
+        </span>
       </div>
     </main>
   );
