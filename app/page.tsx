@@ -1,4 +1,6 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { signIn } from "next-auth/react";
 import { BsGoogle } from "react-icons/bs";
 export default () => {
   return (
@@ -11,7 +13,13 @@ export default () => {
         </div>
       </section>
       <div className="flex flex-col">
-        <Button className="p-6 text-base font-secondary mx-auto">
+        <Button
+          className="p-6 text-base font-secondary mx-auto"
+          onClick={(event) => {
+            event.preventDefault();
+            signIn("google");
+          }}
+        >
           <BsGoogle className="mr-4 h-4 w-4" /> Sign up with Google
         </Button>
         <span className="font-secondary mx-auto text-sm mt-2">

@@ -1,6 +1,7 @@
-import type { NextAuthOptions } from "next-auth";
+import type { Account, NextAuthOptions, Profile } from "next-auth";
 import Google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { Session } from "inspector";
 
 export const options: NextAuthOptions = {
   providers: [
