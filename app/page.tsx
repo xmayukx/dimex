@@ -2,7 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { BsGoogle } from "react-icons/bs";
-export default () => {
+
+export default function Home() {
   return (
     <main className="flex lg:mx-[35rem] flex-col bg-black space-y-[10rem]">
       <section className="flex flex-col justify-start items-start m-24">
@@ -29,4 +30,4 @@ export default () => {
       </div>
     </main>
   );
-};
+}

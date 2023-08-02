@@ -1,9 +1,11 @@
-import type { Account, NextAuthOptions, Profile } from "next-auth";
+import type { NextAuthOptions } from "next-auth";
 import Google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { Session } from "inspector";
+import prisma from "../../../lib/prismadb";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export const options: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma),
   providers: [
     Google({
       clientId: process.env.GOOGLE_ID as string,
@@ -42,4 +44,9 @@ export const options: NextAuthOptions = {
       },
     }),
   ],
+  secret: process.env.SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  debug: process.env.NODE_ENV === "development",
 };
