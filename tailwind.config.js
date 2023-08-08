@@ -18,7 +18,8 @@ module.exports = {
     extend: {
       fontFamily: {
         secondary: ["Titillium Web", "serif"],
-        primary: ["Montserrat", "sans-serif"],
+        primary: ["Exo 2", "sans-serif"],
+        // tertiary: ["Montserrat", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
