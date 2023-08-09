@@ -20,6 +20,7 @@ model User {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   accounts       Account[]
+  buckets        Bucket[]
 }
 
 model Account {
@@ -38,4 +39,26 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Bucket {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  amount      Int
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?  @db.ObjectId
+  outlay      Outlay[]
+}
+
+model Outlay {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  amount      Int
+  Bucket      Bucket?  @relation(fields: [bucketId], references: [id])
+  bucketId    String?  @db.ObjectId
 }

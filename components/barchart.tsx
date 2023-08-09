@@ -54,30 +54,49 @@ const data = [
 
 export function Barcharts() {
   return (
-    <ResponsiveContainer width="95%" height={250}>
-      <LineChart data={data}>
-        <XAxis
-          dataKey="name"
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `$${value}`}
-        />
-        <Line
-          type="monotone"
-          dataKey="total"
-          stroke="#adfa1d"
-          fill="#adfa1d"
-          strokeWidth={4}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+    <div
+      style={{
+        position: "relative",
+        width: "100%",
+        paddingBottom: "250px",
+        height: "70%",
+      }}
+    >
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          top: 0,
+        }}
+      >
+        <ResponsiveContainer>
+          <LineChart data={data}>
+            <XAxis
+              dataKey="name"
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `$${value}`}
+            />
+            <Line
+              type="monotone"
+              dataKey="total"
+              stroke="#adfa1d"
+              fill="#adfa1d"
+              strokeWidth={4}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
   );
 }
