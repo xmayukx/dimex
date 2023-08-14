@@ -38,19 +38,18 @@ export const Login = () => {
   }
 
   return (
-    <div className=" font-secondary">
+    <div className="font-secondary">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col font-semibold gap-y-2">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className=" space-y-1">
                 <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input placeholder="type your email" {...field} />
                 </FormControl>
-                <FormDescription>Email should be valid</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -59,32 +58,18 @@ export const Login = () => {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className=" space-y-1">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input placeholder="your password" {...field} />
                 </FormControl>
-                <FormDescription>
-                  Password should be 8 charecters long
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Log in</Button>
+          <Button className="mt-3 font-semibold" type="submit">Log in</Button>
         </form>
       </Form>
-      <div className="flex flex-col">
-        <Button
-          className="p-6 text-base font-secondary mx-auto"
-          onClick={(event) => {
-            event.preventDefault();
-            signIn("google");
-          }}
-        >
-          <BsGoogle className="mr-4 h-4 w-4" /> Sign up with Google
-        </Button>
-      </div>
     </div>
   );
 };
