@@ -1,7 +1,8 @@
 "use client";
 import { FC } from "react";
 import { Input } from "@/components/ui/input";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { Form } from "@/components/ui/form";
 import {
   FormControl,
   FormDescription,
@@ -13,21 +14,30 @@ import {
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Exo_2 } from "next/font/google";
+import { Register } from "../components/register";
+import { Login } from "../components/login";
+const exo_2 = Exo_2({
+  weight: "700",
+  subsets: ["latin-ext"],
+  display: "swap",
+});
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
   email: z.string().email().includes("@"),
   password: z.string().length(8, "Password should be 8 charecters long"),
+  // confirmPassword: z.string().length(8, "Password should be 8 charecters long"),
 });
 
-export function ProfileForm() {
-  // 1. Define your form.
+const Signup = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       email: "",
-      password:""
+      password: "",
     },
   });
 
@@ -35,32 +45,22 @@ export function ProfileForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
-}
-const Signup = () => {
+
   return (
     <>
-      <div>
-        {/* <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form> */}
+      <div className="flex flex-col">
+        <Tabs defaultValue="signup" className="w-[400px]">
+          <TabsList className="grid w-full grid-cols-2 font-primary">
+            <TabsTrigger value="signup">Sign up</TabsTrigger>
+            <TabsTrigger value="login">Log in</TabsTrigger>
+          </TabsList>
+          <TabsContent value="signup" className=" font-secondary">
+            <Register />
+          </TabsContent>
+          <TabsContent value="login"> 
+          <Login />
+           </TabsContent>
+        </Tabs>
       </div>
     </>
   );
