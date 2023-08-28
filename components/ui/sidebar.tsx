@@ -5,16 +5,10 @@ import { ScrollArea } from "./scroll-area";
 import { VscGraphLine } from "react-icons/vsc";
 import { TbBrandBitbucket } from "react-icons/tb";
 import { SidebarProps, Buckets } from "../../types/Buckets";
-// interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-//   buckets: Buckets[];
-// }
-
-// interface Buckets {
-//   name: string;
-//   id: number;
-// }
+import { useRouter } from "next/navigation";
 
 export function Sidebar({ buckets, ...className }: SidebarProps) {
+  const router = useRouter();
   return (
     <div className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
@@ -23,9 +17,15 @@ export function Sidebar({ buckets, ...className }: SidebarProps) {
             Dimex
           </h2>
           <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={() => {
+                router.push("/dashboard");
+              }}
+            >
               <VscGraphLine />
-              <span className="ml-2">Analytics</span>
+              <span className="ml-2 text-base">Analytics</span>
             </Button>
           </div>
         </div>
@@ -40,10 +40,13 @@ export function Sidebar({ buckets, ...className }: SidebarProps) {
                   key={`${i + 1}`}
                   variant="ghost"
                   className="w-full justify-start font-normal"
-                  onClick={() => console.log("clicked")}
+                  onClick={() => {
+                    console.log("clicked");
+                    router.push(`/dashboard/${bucket.id}`);
+                  }}
                 >
                   <TbBrandBitbucket />
-                  <span className="ml-2"> {bucket.name}</span>
+                  <span className="ml-2 text-base">{bucket.name}</span>
                 </Button>
               ))}
             </div>
