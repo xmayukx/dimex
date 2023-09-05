@@ -10,11 +10,11 @@ import {
 import { Exo_2 } from "next/font/google";
 import React from "react";
 import { Sidebar } from "@/components/ui/sidebar";
-
+import { Buckets } from "@/types/Buckets";
 const buckets = [
   { name: "Tax", id: 4 },
-  { name: "Medical", id: 5 },
-  { name: "Education", id: 9 },
+  { name: "Medical", id: 5, amount: 1500, stats: "+10.1%" },
+  { name: "Education", id: 9, amount: 1000, stats: "+20.1%" },
 ];
 const exo_2 = Exo_2({
   weight: "700",

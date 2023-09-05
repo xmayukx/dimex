@@ -16,6 +16,8 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { BsGoogle } from "react-icons/bs";
+import { redirect } from "next/dist/server/api-utils";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   email: z.string().email().includes("@"),
@@ -35,12 +37,28 @@ export const Login = () => {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    signIn("credentials", {
+      values,
+      redirect: false,
+    })
+      .then((callback) => {
+        console.log(callback);
+        if (callback?.error) {
+          toast.error("Invalid credentials");
+        } else if (callback?.ok) {
+          toast.success("Logged in successfully");
+        }
+      })
+      .catch(() => toast.error("Something went wrong!"));
   }
 
   return (
     <div className="font-secondary">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col font-semibold gap-y-2">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col font-semibold gap-y-2"
+        >
           <FormField
             control={form.control}
             name="email"
@@ -67,7 +85,9 @@ export const Login = () => {
               </FormItem>
             )}
           />
-          <Button className="mt-3 font-semibold" type="submit">Log in</Button>
+          <Button className="mt-3 font-semibold" type="submit">
+            Log in
+          </Button>
         </form>
       </Form>
     </div>

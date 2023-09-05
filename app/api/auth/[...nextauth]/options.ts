@@ -3,7 +3,7 @@ import Google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "../../../lib/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-
+import bcrypt from "bcrypt";
 export const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -14,10 +14,10 @@ export const options: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: {
-          label: "Username",
-          type: "text",
-          placeholder: "your username",
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "type your email",
         },
         password: {
           label: "Password",
@@ -26,20 +26,26 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        //Normal email password authentication
-        const user = {
-          id: "42",
-          name: "John",
-          email: "john@gmail.com",
-          password: "password",
-        };
-        if (
-          credentials?.username === user.name &&
-          credentials?.password === user.password
-        ) {
-          return user;
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Please fill all fields");
+        }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+        if (!user || !user?.hashedPassword) {
+          throw new Error("User does not exist or try logging in with google");
+        }
+
+        const isMatch = await bcrypt.compare(
+          credentials?.password,
+          user?.hashedPassword,
+        );
+        if (!isMatch) {
+          throw new Error("Invalid Password");
         } else {
-          return null;
+          return user;
         }
       },
     }),
@@ -47,6 +53,14 @@ export const options: NextAuthOptions = {
   secret: process.env.SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 1 * 24 * 60 * 60,
   },
+  // pages: {
+  //   signIn: '/signin',
+  //   // signOut: '/auth/signout',
+  //   // error: '/auth/error', // Error code passed in query string as ?error=
+  //   // verifyRequest: '/auth/verify-request', // (used for check email message)
+  //   // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  // },
   debug: process.env.NODE_ENV === "development",
 };

@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LiaRupeeSignSolid } from "react-icons/lia";
 import Link from "next/link";
-
+import EcoTabs from "../../components/ecoTabs";
+import { Buckets } from "@/types/Buckets";
 export default function Page({ params }: { params: { id: string } }) {
   return (
     <>
@@ -11,61 +12,12 @@ export default function Page({ params }: { params: { id: string } }) {
       <div className="flex flex-col md:flex">
         <div className="flex-1 space-y-4 p-4 pt-5">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <EcoTabs isBalance={true} amount={45780} stats={11.5} />
             <Card className=" bg-emerald-100 text-emerald-600">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Balance
-                </CardTitle>
-                <LiaRupeeSignSolid />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold flex">
-                  <div className="my-auto">
-                    <LiaRupeeSignSolid className="w-5" />
-                  </div>
-                  <span>45,087</span>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
-                </p>
-              </CardContent>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2"></CardHeader>
+              <CardContent></CardContent>
             </Card>
-            <Card className=" bg-emerald-100 text-emerald-600">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                {/* <CardTitle className="text-sm font-medium">
-                  Total Balance
-                </CardTitle>
-                <LiaRupeeSignSolid /> */}
-              </CardHeader>
-              <CardContent>
-                {/* <div className="text-2xl font-bold flex">
-                  <div className="my-auto">
-                    <LiaRupeeSignSolid className="w-5" />
-                  </div>
-                  <span>45,087</span>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  +20.1% from last month
-                </p> */}
-              </CardContent>
-            </Card>
-            <Card className=" text-rose-600 bg-rose-100">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Spent</CardTitle>
-                <LiaRupeeSignSolid />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold flex">
-                  <div className="my-auto">
-                    <LiaRupeeSignSolid className="w-5" />
-                  </div>
-                  <span>50</span>
-                </div>
-                <p className="text-xs text-muted-foreground">
-                  -80.1% from last month
-                </p>
-              </CardContent>
-            </Card>
+            <EcoTabs isBalance={false} amount={780} stats={8.5} />
           </div>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
             <Card className="lg:col-span-4 col-span-3"></Card>

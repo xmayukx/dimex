@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -33,8 +34,16 @@ export const Register = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    const res = await fetch("/api/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    console.log(res);
   }
 
   return (
@@ -82,7 +91,9 @@ export const Register = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="mt-3 font-semibold">Sign Up</Button>
+        <Button type="submit" className="mt-3 font-semibold">
+          Sign Up
+        </Button>
       </form>
     </Form>
   );
