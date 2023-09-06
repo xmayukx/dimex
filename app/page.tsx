@@ -106,8 +106,8 @@ export default function Home() {
                   intuitive app. Uncover spending patterns, make informed
                   choices, and shape a brighter future. Each entry is a step
                   toward understanding and better decision-making. Through highs
-                  and lows, we're your loyal companion, guiding you towards
-                  mindful prosperity. Here's to smart decisions, exciting
+                  and lows, we&apos;re your loyal companion, guiding you towards
+                  mindful prosperity. Here&apos;s to smart decisions, exciting
                   opportunities, and a stronger financial future.
                 </span>
               </CardHeader>
