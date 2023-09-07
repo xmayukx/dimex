@@ -38,11 +38,13 @@ export const Login = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     signIn("credentials", {
-      values,
+      email: values.email,
+      password: values.password,
       redirect: false,
     })
       .then((callback) => {
-        console.log(callback);
+        console.log(callback?.error, callback?.ok, callback?.status);
+
         if (callback?.error) {
           toast.error("Invalid credentials");
         } else if (callback?.ok) {

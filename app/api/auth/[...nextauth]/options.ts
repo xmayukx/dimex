@@ -1,9 +1,16 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, RequestInternal } from "next-auth";
 import Google from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "../../../lib/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import bcrypt from "bcrypt";
+import { NextResponse } from "next/server";
+
+type Credentials = {
+  email: string;
+  password: string;
+};
+
 export const options: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -16,16 +23,18 @@ export const options: NextAuthOptions = {
       credentials: {
         email: {
           label: "Email",
-          type: "email",
+          type: "string",
           placeholder: "type your email",
         },
         password: {
           label: "Password",
-          type: "password",
+          type: "string",
           placeholder: "your password",
         },
       },
-      async authorize(credentials) {
+      async authorize(
+        credentials: Record<"email" | "password", string> | undefined,
+      ) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Please fill all fields");
         }

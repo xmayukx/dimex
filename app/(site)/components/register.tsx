@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -43,7 +44,12 @@ export const Register = () => {
       },
       body: JSON.stringify(values),
     });
-    console.log(res);
+    const data = await res.json();
+    if (!res.ok) {
+      toast.error(data.message);
+    } else {
+      toast.success("Account created successfully.\nNow you can login.");
+    }
   }
 
   return (
